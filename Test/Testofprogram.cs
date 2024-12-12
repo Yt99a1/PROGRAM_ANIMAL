@@ -1,61 +1,226 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using initize_diet_size;
 using Xunit;
 
-
-
-public class Testofprogram
+namespace AnimalTransportTest
 {
-    [Fact]
-    public void Test_AddAnimalTrain()
+    public class Animal
     {
-        var Train = new Train();
-        var animal = new Animal { Size = Size.Small, Diet = Diet.Plant };
+        public string Name { get; }
+        public int Size { get; }
 
-        Assert.True(Train.AddAnimal(animal));
-        Assert.Equal(1, Train.getTotalthings());
-    }
-
-    [Fact]
-    public void Test_AddMultipleAnimals()
-    {
-        var Train = new Train();
-        var animal1 = new Animal { Size = Size.Small, Diet = Diet.Plant };
-        var animal2 = new Animal { Size = Size.Small, Diet = Diet.Plant };
-
-        Assert.True(Train.AddAnimal(animal1));
-        Assert.True(Train.AddAnimal(animal2));
-        Assert.Equal(2, Train.getTotalthings());
-    }
-
-    [Fact]
-    public void Test_AddAnimalTotrainbyCapacity()
-    {
-        var Train = new Train();
-        var animal1 = new Animal { Size = Size.Large, Diet = Diet.Plant };
-        var animal2 = new Animal { Size = Size.Large, Diet = Diet.Plant };
-
-        Assert.True(Train.AddAnimal(animal1));
-        Assert.False(Train.AddAnimal(animal2));
-    }
-
-    [Fact]
-    public void Test_DistributeAnimals()
-    {
-        var distribution = new TrainDistFunction();
-        var animals = new List<Animal>
+        public Animal(string name, int size)
         {
-            new Animal { Name = "Lion", Size = Size.Large, Diet = Diet.Meat },
-            new Animal { Name = "Giraffe", Size = Size.Large, Diet = Diet.Plant },
-            new Animal { Name = "Monkey", Size = Size.Small, Diet = Diet.Plant },
-            new Animal { Name = "Tiger", Size = Size.Large, Diet = Diet.Meat },
-            new Animal { Name = "Zebra", Size = Size.Medium, Diet = Diet.Plant },
-        };
+            if (size < 0)
+            {
+                throw new ArgumentException("Sorry, Size cannot be negative");
+            }
 
-        distribution.DistributeAnimals(animals);
+            Name = name;
+            Size = size;
+        }
+    }
 
-        Assert.Equal(3, distribution.Trains.Count);
+    public class Train
+    {
+        public List<Animal> Animals { get; } = new List<Animal>();
+        public int Capacity { get; } = 50;
+
+        public bool AddAnimal(Animal animal)
+        {
+            if (GetTotalSize() + animal.Size <= Capacity)
+            {
+                Animals.Add(animal);
+                return true;
+            }
+            return false;
+        }
+
+        public int GetTotalSize()
+        {
+            return Animals.Sum(a => a.Size);
+        }
+    }
+
+    public class TrainDistribution
+    {
+        public List<Train> Trains { get; } = new List<Train>();
+
+        public void AddAnimal(Animal animal)
+        {
+            foreach (var train in Trains)
+            {
+                if (train.AddAnimal(animal))
+                {
+                    return;
+                }
+            }
+
+            var newTrain = new Train();
+            newTrain.AddAnimal(animal);
+            Trains.Add(newTrain);
+        }
+
+        public void DistributeAnimals(List<Animal> animals)
+        {
+            
+            animals = animals.OrderByDescending(a => a.Size).ToList();
+
+            foreach (var animal in animals)
+            {
+                                bool added = false;
+                foreach (var train in Trains)
+                {
+                    if (train.AddAnimal(animal))
+                    {
+                        added = true;
+                        break; 
+                    }
+                }
+
+                
+                if (!added)
+                {
+                    var newTrain = new Train();
+                    newTrain.AddAnimal(animal);
+                    Trains.Add(newTrain);
+                }
+            }
+        }
+    }
+
+        public class AnimalTests
+    {
+        [Fact]
+        public void Animal_ValidInput_CreatesanAnimal()
+        {
+            
+            var name = "Lion";
+            var size = 10;
+
+            
+            var animal = new Animal(name, size);
+
+            
+            Assert.Equal(name, animal.Name);
+            Assert.Equal(size, animal.Size);
+        }
+
+        [Fact]
+        public void Animal_InvalidSize_throughsErrors()
+        {
+           
+            var name = "Lion";
+            var size = -1;
+
+            
+            Assert.Throws<ArgumentException>(() => new Animal(name, size));
+        }
+    }
+
+    public class TrainTests
+    {
+        [Fact]
+        public void AddAnimal_AddAnimalToTrain()
+        {
+            
+            var train = new Train();
+            var animal = new Animal("Lion", 10);
+
+            
+            var result = train.AddAnimal(animal);
+
+            
+            Assert.True(result);
+            Assert.Single(train.Animals);
+        }
+
+        [Fact]
+        public void AddAnimal_ExceedstheCapacity()
+        {
+            
+            var train = new Train();
+            var animal1 = new Animal("Lion", 30);
+            var animal2 = new Animal("Elephant", 30);
+
+            
+            train.AddAnimal(animal1);
+            var result = train.AddAnimal(animal2);
+
+            Assert.False(result);
+            Assert.Single(train.Animals);
+        }
+
+        [Fact]
+        public void GetTotalSize_NoAnimals()
+        {
+            
+            var train = new Train();
+
+           
+            var result = train.GetTotalSize();
+
+            
+            Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public void GetTotalSize_OneAnimal()
+        {
+            
+            var train = new Train();
+            var animal = new Animal("Lion", 10);
+
+            
+            train.AddAnimal(animal);
+            var result = train.GetTotalSize();
+            Assert.Equal(10, result);
+        }
+    }
+
+    public class TrainDistributionTests
+    {
+        [Fact]
+        public void AddAnimal_only_ValidAnimal_ToTrain()
+        {
+            
+            var distribution = new TrainDistribution();
+            var animal = new Animal("Lion", 10);
+            distribution.AddAnimal(animal);
+
+            
+            Assert.Single(distribution.Trains);
+            Assert.Single(distribution.Trains.First().Animals);
+        }
+
+        [Fact]
+        public void DistributeAnimals_DistributesAnimalsAcrossTrains()
+        {
+            
+            var distribution = new TrainDistribution();
+            var animals = new List<Animal>
+    {
+        new Animal("Elephant", 30),    
+        new Animal("Giraffe", 20),    
+        new Animal("Rabbit", 1),       
+        new Animal("Cheetah", 2),     
+        new Animal("Tiger1", 3),       
+        new Animal("Aligator", 3)       
+    };
+
+            
+            distribution.DistributeAnimals(animals);
+
+            
+            Assert.Equal(2, distribution.Trains.Count); 
+            Assert.Equal(50, distribution.Trains[0].GetTotalSize()); 
+            Assert.Equal(9, distribution.Trains[1].GetTotalSize()); 
+            Assert.Contains(distribution.Trains[0].Animals, a => a.Name == "Elephant"); 
+            Assert.Contains(distribution.Trains[1].Animals, a => a.Name == "Cheetah"); 
+            Assert.Contains(distribution.Trains[1].Animals, a => a.Name == "Tiger1"); 
+            Assert.Contains(distribution.Trains[1].Animals, a => a.Name == "Aligator"); 
+        }
     }
 }
-
-
