@@ -25,6 +25,11 @@ namespace TrainFunction
             }
             return false;
         }
+        public int  getTotalthings()
+        {
+            return Animals.Sum(a => a.GetAnimalSize);
+        }
+
 
     }
 }
