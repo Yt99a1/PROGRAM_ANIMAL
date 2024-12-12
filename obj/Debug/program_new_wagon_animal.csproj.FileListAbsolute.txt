@@ -1,0 +1,7 @@
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\bin\Debug\program_new_wagon_animal.exe.config
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\bin\Debug\program_new_wagon_animal.exe
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\bin\Debug\program_new_wagon_animal.pdb
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\obj\Debug\program_new_wagon_animal.csproj.AssemblyReference.cache
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\obj\Debug\program_new_wagon_animal.csproj.CoreCompileInputs.cache
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\obj\Debug\program_new_wagon_animal.exe
+C:\Users\ahmad\source\repos\program_new_wagon_animal\program_new_wagon_animal\obj\Debug\program_new_wagon_animal.pdb

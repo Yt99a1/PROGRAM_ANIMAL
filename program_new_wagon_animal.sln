@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "program_new_wagon_animal", "program_new_wagon_animal\program_new_wagon_animal.csproj", "{CFE44C47-E44E-4D3F-AEC4-022D39174713}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{8CB6DAAA-8EE7-40E8-893A-1E1A35057C14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFE44C47-E44E-4D3F-AEC4-022D39174713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE44C47-E44E-4D3F-AEC4-022D39174713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE44C47-E44E-4D3F-AEC4-022D39174713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE44C47-E44E-4D3F-AEC4-022D39174713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CB6DAAA-8EE7-40E8-893A-1E1A35057C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB6DAAA-8EE7-40E8-893A-1E1A35057C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB6DAAA-8EE7-40E8-893A-1E1A35057C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB6DAAA-8EE7-40E8-893A-1E1A35057C14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
