@@ -1,38 +1,37 @@
 ﻿using System;
-using initize_diet_size;
-using Animalfunction;
 using System.Collections.Generic;
+using System.Linq;
+using Animalfunction;
 
 namespace TrainFunction
 {
     public class Train
     {
         public List<Animal> Animals { get; set; }
-        
-        public int CapacityofTrain { get; set; }
-
+        public int Capacity { get; set; }
 
         public Train()
         {
-            CapacityofTrain = 50;
+            Capacity = 50;
             Animals = new List<Animal>();
         }
+
+
         public bool AddAnimal(Animal animal)
         {
-            if(getTotalthings()+ animal.GetAnimalSize <= CapacityofTrain )
-            {
-                Animal.Add(animal);
-                return true;
 
+            if (GetTotalSize() + animal.GetAnimalSize <= Capacity)
+            {
+                Animals.Add(animal);
+                return true;
             }
             return false;
         }
-        public int  getTotalthings()
+
+
+        public int GetTotalSize()
         {
             return Animals.Sum(a => a.GetAnimalSize);
         }
-
-
     }
 }
-
