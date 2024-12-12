@@ -23,26 +23,26 @@ public class Testofprogram
         var animal1 = new Animal { Size = Size.Small, Diet = Diet.Plant };
         var animal2 = new Animal { Size = Size.Small, Diet = Diet.Plant };
 
-        Assert.True(wagon.AddAnimal(animal1));
-        Assert.True(wagon.AddAnimal(animal2));
-        Assert.Equal(2, wagon.GetTotalPoints());
+        Assert.True(Train.AddAnimal(animal1));
+        Assert.True(Train.AddAnimal(animal2));
+        Assert.Equal(2, Train.getTotalthings());
     }
 
     [Fact]
-    public void TestAddAnimalToWagonExceedsCapacity()
+    public void Test_AddAnimalTotrainbyCapacity()
     {
-        var wagon = new Wagon();
+        var Train = new Train();
         var animal1 = new Animal { Size = Size.Large, Diet = Diet.Plant };
         var animal2 = new Animal { Size = Size.Large, Diet = Diet.Plant };
 
-        Assert.True(wagon.AddAnimal(animal1));
-        Assert.False(wagon.AddAnimal(animal2));
+        Assert.True(Train.AddAnimal(animal1));
+        Assert.False(Train.AddAnimal(animal2));
     }
 
     [Fact]
-    public void TestDistributeAnimals()
+    public void Test_DistributeAnimals()
     {
-        var distribution = new WagonDistribution();
+        var distribution = new TrainDistFunction();
         var animals = new List<Animal>
         {
             new Animal { Name = "Lion", Size = Size.Large, Diet = Diet.Meat },
@@ -54,7 +54,7 @@ public class Testofprogram
 
         distribution.DistributeAnimals(animals);
 
-        Assert.Equal(3, distribution.Wagons.Count);
+        Assert.Equal(3, distribution.Trains.Count);
     }
 }
 
