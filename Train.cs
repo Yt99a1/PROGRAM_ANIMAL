@@ -19,8 +19,10 @@ namespace TrainFunction
         }
         public bool AddAnimal(Animal animal)
         {
-            if()
+            if(getTotalthings()+ animal.GetAnimalSize <= CapacityofTrain )
             {
+                Animal.Add(animal);
+                return true;
 
             }
             return false;
